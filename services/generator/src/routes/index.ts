@@ -1,12 +1,11 @@
 import { Router } from 'express';
-import BasicRoute from './BasicRoute';
+import {basicRoute} from './BasicRoute';
+import {getSuggestions} from './GetSuggestions';
 
-// Init router and path
+
 const router = Router();
 
-// Add sub-routes
-router.use('/', BasicRoute);
+router.get('/', basicRoute)
+router.post('/getSuggestions', getSuggestions)
 
-
-// Export the base-router
 export default router;
