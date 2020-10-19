@@ -1,26 +1,57 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  SafeAreaView,
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { mockRestaurants } from '../mockData';
 import SwipeDetail from '../components/SwipeDetail';
 
-const Swipe = ({ navigation }) => {
+const { width, height } = Dimensions.get('window');
+
+const Swipe = () => {
+  const [restaurantCounter, setRestaurantCounter] = useState(0);
+  const [restaurantItem, setRestaurantItem] = useState(
+    mockRestaurants[restaurantCounter]
+  );
+
+  const onClickYes = () => {
+    setRestaurantCounter(restaurantCounter + 1);
+  };
+  const onClickNo = () => {
+    setRestaurantCounter(restaurantCounter + 1);
+  };
+
+  useEffect(() => {
+    setRestaurantItem(mockRestaurants[restaurantCounter]);
+  }, [restaurantCounter]);
+
   return (
-    <View>
-      <SwipeDetail />
-    </View>
+    <SafeAreaView>
+      <SwipeDetail
+        id={restaurantItem.id}
+        restaurantName={restaurantItem.restaurantName}
+        description={restaurantItem.description}
+        rating={restaurantItem.rating}
+        price={restaurantItem.price}
+        backgroundImage={restaurantItem.backgroundImage}
+        onClickYes={onClickYes}
+        onClickNo={onClickNo}
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    marginLeft: 15,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
   container: {
     marginBottom: 10,
+  },
+  itemWrapper: {
+    width,
+    height,
   },
 });
 

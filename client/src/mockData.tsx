@@ -1,46 +1,35 @@
 const mockRestaurants = [
   {
     id: '1',
-    merchantName: 'Espresso house',
-    deal: 'Buy 10 cups of coffee and get one free!',
-    totalStamps: 10,
-    achievedStamps: 6,
+    restaurantName: 'Phils burgers',
+    description: 'Pretty nice burgers',
+    rating: '4,0',
+    price: '$$',
     backgroundImage: {
       uri:
-        'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
-    },
-    merchantImage: {
-      uri:
-        'https://upload.wikimedia.org/wikipedia/en/thumb/3/33/Espresso_House_logo.svg/1200px-Espresso_House_logo.svg.png',
+        'https://stockburgerco.com/wp-content/uploads/2017/09/stockburgerco-gallery-001.jpg',
     },
   },
   {
     id: '2',
-    merchantName: 'Starbucks',
-    deal: 'Buy 10 cups of coffee and get one free!',
-    totalStamps: 10,
-    achievedStamps: 3,
+    restaurantName: 'Sushi Yama',
+    description: 'Great lunch sushi!',
+    rating: '4,7',
+    price: '$',
     backgroundImage: {
       uri:
-        'https://images.pexels.com/photos/597933/pexels-photo-597933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    },
-    merchantImage: {
-      uri:
-        'https://tonimarino.co.uk/wp-content/uploads/2018/07/Starbucks-Logo-1.png',
+        'https://static.thatsup.co/content/img/article/18/dec/guiden-till-citys-basta-sushi.jpg',
     },
   },
   {
     id: '3',
-    merchantName: 'Toyama sushi',
-    deal: 'Hip sushi place',
-    totalStamps: 7,
-    achievedStamps: 6,
+    restaurantName: 'Ai ramen',
+    description: 'Perfect for cosy autumn evenings...',
+    rating: '4,2',
+    price: '$$',
     backgroundImage: {
       uri:
-        'https://images.pexels.com/photos/2098143/pexels-photo-2098143.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    },
-    merchantImage: {
-      uri: 'http://toyama.se/images/Toyama.png',
+        'https://www.lidl-recept.se/var/lidl-recipes/storage/images/lidl-recept/recept/ramen-med-tofu/2084687-1-swe-SE/Ramen-med-tofu.jpg',
     },
   },
 ];
