@@ -1,6 +1,7 @@
 {
   "name": "generator",
   "version": "0.0.0",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "node build.js && tsc --build tsconfig.prod.json",
     "lint": "tslint --project \"tsconfig.json\"",
