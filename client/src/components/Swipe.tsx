@@ -9,14 +9,18 @@ import {
 import { withNavigation } from 'react-navigation';
 import { mockRestaurants } from '../mockData';
 import SwipeDetail from '../components/SwipeDetail';
+import useRestaurantsResult from '../hooks/useResults';
 
 const { width, height } = Dimensions.get('window');
 
 const Swipe = () => {
+  const [api, restaurantsResult, errorMessage] = useRestaurantsResult();
+  console.log('restaurantsResult: ', restaurantsResult);
   const [restaurantCounter, setRestaurantCounter] = useState(0);
-  const [restaurantItem, setRestaurantItem] = useState(
-    mockRestaurants[restaurantCounter]
-  );
+  // const [restaurantItem, setRestaurantItem] = useState(
+  //   mockRestaurants[restaurantCounter]
+  // );
+  const [restaurantItem, setRestaurantItem] = useState(restaurantsResult);
 
   const onClickYes = () => {
     setRestaurantCounter(restaurantCounter + 1);
