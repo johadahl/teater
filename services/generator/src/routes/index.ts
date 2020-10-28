@@ -6,6 +6,6 @@ import {getSuggestions} from './getSuggestions';
 const router = Router();
 
 router.get('/', basicRoute)
-router.post('/getSuggestions', getSuggestions)
+router.get('/getSuggestions', getSuggestions)
 
 export default router;
