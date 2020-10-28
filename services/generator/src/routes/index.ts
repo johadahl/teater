@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {basicRoute} from './BasicRoute';
-import {getSuggestions} from './GetSuggestions';
+import {getSuggestions} from './getSuggestions';
 
 
 const router = Router();
