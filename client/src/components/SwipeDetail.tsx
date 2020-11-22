@@ -9,36 +9,51 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { withNavigation } from 'react-navigation';
-import { mockRestaurants } from '../mockData';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const SwipeDetail = ({ navigation }) => {
-  const backgroundImage = mockRestaurants[2].backgroundImage;
+const SwipeDetail = ({
+  id,
+  restaurantName,
+  description,
+  rating,
+  price,
+  backgroundImage,
+  onClickYes,
+  onClickNo,
+}) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        <View style={styles.bottomContainer}>
-          <View style={styles.textContainer}>
-            <Text style={styles.header}>{mockRestaurants[2].merchantName}</Text>
-            <Text style={styles.description}>{mockRestaurants[2].deal}</Text>
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.4)']}
+          style={styles.container}
+          start={{ x: 0.8, y: 0 }}
+          end={{ x: 0.8, y: 1.2 }}
+        >
+          <View style={styles.bottomContainer}>
+            <View style={styles.textContainer}>
+              <Text style={styles.header}>{restaurantName}</Text>
+              <Text style={styles.description}>{description}</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => onClickNo()}
+              >
+                <Text>No</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => onClickYes()}
+              >
+                <Text>Yes</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => console.warn('No')}
-            >
-              <Text>No</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => console.warn('Yes')}
-            >
-              <Text>Yes</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </LinearGradient>
       </ImageBackground>
     </View>
   );
@@ -61,7 +76,6 @@ const styles = StyleSheet.create({
     width: 100,
   },
   container: {
-    backgroundColor: 'grey',
     height: windowHeight,
   },
   textContainer: {
@@ -83,8 +97,6 @@ const styles = StyleSheet.create({
   bottomContainer: {
     height: windowHeight * 0.35,
     width: windowWidth,
-    backgroundColor: 'black',
-    opacity: 0.5,
     position: 'absolute',
     bottom: 0,
   },

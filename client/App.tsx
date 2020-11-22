@@ -1,4 +1,4 @@
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, NavigationEvents } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import SwipeScreen from './src/screens/SwipeScreen';
@@ -12,7 +12,8 @@ const navigator = createStackNavigator(
     initialRouteName: 'Home',
     defaultNaigationOptions: {
       //remove later
-      title: 'Swipe!',
+      headerMode: 'none',
+      // title: 'Swipe!',
     },
   }
 );
