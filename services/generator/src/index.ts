@@ -8,42 +8,46 @@
 //     logger.info('Express server started on port: ' + port);
 // });
 
-const NEW_CONNECTION_EVENT = 'newConnection'
-const NEW_LIKE_EVENT = 'newLike'
-const NEW_MATCH_EVENT = 'newMatch'
-
 import express from 'express'
 import http from 'http'
 import * as ioImport from 'socket.io'
+import { getSuggestions } from './routes/getSuggestions'
+import { SocketEvent } from './types'
+import { 
+  NEW_CONNECTION_EVENT, 
+  NEW_LIKE_EVENT, 
+  NEW_MATCH_EVENT, 
+} from './constants'
+
+const SERVER_PORT = 4000
 
 let app = express()
 let server = new http.Server(app)
-let io = new ioImport.Server(server)
+let io = new ioImport.Server(server, { cors: { origin: '*' } })
 
-app.get('/create', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
+app.use('/get-suggestion', (req, res) => {
+  const {lat, lng} = req.query
+  const roomId = (Math.random()*10000).toPrecision(4)
+  res.send({roomId})
 })
 
-io.on('connection', (socket) => {
-  const { session } = socket.handshake.query;
-  socket.join(session);
+io.on("connection", (socket) => {
+  const { roomId } = socket.handshake.query;
+  socket.join(roomId);
 
-  socket.on(NEW_CONNECTION_EVENT, (data: any) => {
-    io.in(session).emit(`Welcome to ${session}`)
-    // return suggestions for this session
-  })
+  io.in(roomId).emit(NEW_CONNECTION_EVENT, 'Welcome')
 
-  socket.on(NEW_LIKE_EVENT, (data: any) => {
+  socket.on(NEW_LIKE_EVENT, (data: SocketEvent) => {
     // Store what was liked
     // If there is a match:
-    io.in(session).emit(NEW_MATCH_EVENT, data);
+    io.in(roomId).emit(NEW_MATCH_EVENT, data);
   })
 
   socket.on("disconnect", () => {
-    socket.leave(session);
-  })
-})
+    socket.leave(roomId);
+  });
+});
 
-server.listen(3000, () => {
-  console.log('listening on 3000')
+server.listen(SERVER_PORT, () => {
+  console.log(`listening on ${SERVER_PORT}`)
 })
