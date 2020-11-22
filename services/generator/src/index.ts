@@ -1,17 +1,10 @@
 // import './LoadEnv'; // Must be the first import
 // import app from '@server';
-// import logger from '@shared/Logger';
-
-// // Start the server
-// const port = Number(process.env.PORT || 3000);
-// app.listen(port, () => {
-//     logger.info('Express server started on port: ' + port);
-// });
 
 import express from 'express'
 import http from 'http'
+import logger from '@shared/Logger';
 import * as ioImport from 'socket.io'
-import { getSuggestions } from './routes/getSuggestions'
 import { SocketEvent } from './types'
 import { 
   NEW_CONNECTION_EVENT, 
@@ -25,10 +18,14 @@ let app = express()
 let server = new http.Server(app)
 let io = new ioImport.Server(server, { cors: { origin: '*' } })
 
-app.use('/get-suggestion', (req, res) => {
+app.get('/get-suggestion', (req, res) => {
   const {lat, lng} = req.query
   const roomId = (Math.random()*10000).toPrecision(4)
   res.send({roomId})
+})
+
+app.get('/', (req, res) => {
+  res.send({text: 'Hello World'})
 })
 
 io.on("connection", (socket) => {
@@ -48,6 +45,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(SERVER_PORT, () => {
-  console.log(`listening on ${SERVER_PORT}`)
-})
+const port = Number(process.env.PORT || SERVER_PORT);
+server.listen(port, () => {
+    logger.info('Express server started on port: ' + port);
+});
