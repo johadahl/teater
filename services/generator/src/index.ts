@@ -3,6 +3,7 @@
 
 import express from 'express'
 import http from 'http'
+import cors from 'cors'
 import logger from '@shared/Logger';
 import * as ioImport from 'socket.io'
 import { SocketEvent } from './types'
@@ -17,6 +18,8 @@ const SERVER_PORT = 4000
 let app = express()
 let server = new http.Server(app)
 let io = new ioImport.Server(server, { cors: { origin: '*' } })
+
+app.use(cors)
 
 app.get('/get-suggestion', (req, res) => {
   const {lat, lng} = req.query
