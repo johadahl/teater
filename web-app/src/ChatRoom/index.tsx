@@ -1,5 +1,4 @@
 import React from "react";
-import "./ChatRoom.css";
 import { useChat } from "./useChat";
 
 export const ChatRoom = (props: any) => {
