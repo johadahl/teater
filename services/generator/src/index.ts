@@ -19,7 +19,7 @@ let app = express()
 let server = new http.Server(app)
 let io = new ioImport.Server(server, { cors: { origin: '*' } })
 
-app.use(cors)
+// app.use(cors)
 
 app.get('/get-suggestion', (req, res) => {
   const {lat, lng} = req.query
