@@ -19,11 +19,10 @@ let app = express()
 let server = new http.Server(app)
 let io = new ioImport.Server(server, { cors: { origin: '*' } })
 
-// app.use(cors)
-
-app.get('/get-suggestion', (req, res) => {
+app.get('/get-suggestion', cors(), (req, res) => {
   const {lat, lng} = req.query
-  const roomId = (Math.random()*10000).toPrecision(4)
+  console.log(lat, lng)
+  const roomId = (Math.random().toString(36).substr(2, 4).toUpperCase())
   res.send({roomId})
 })
 
