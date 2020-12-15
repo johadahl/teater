@@ -12,8 +12,8 @@ import {
   NEW_LIKE_EVENT, 
   NEW_MATCH_EVENT, 
 } from './constants'
-
 import { getSuggestions } from './helpers/getSuggestions'
+import { mockRestaurants } from './helpers/mockRestaurants'
 
 const SERVER_PORT = 4000
 

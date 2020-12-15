@@ -1,4 +1,4 @@
-const mockRestaurants = [
+export const mockRestaurants = [
     {
       id: '1',
       restaurantName: 'Phils burgers',
