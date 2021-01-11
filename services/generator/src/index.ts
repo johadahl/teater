@@ -12,8 +12,7 @@ import {
   NEW_LIKE_EVENT, 
   NEW_MATCH_EVENT, 
 } from './constants'
-import { getSuggestions } from './helpers/getSuggestions'
-import { mockRestaurants } from './helpers/mockRestaurants'
+import { store, mockRestaurants, getSuggestions, Room } from './helpers'
 
 const SERVER_PORT = 4000
 
@@ -26,26 +25,37 @@ app.get('/get-suggestion', cors(), (req, res) => {
 
   // const suggestions = getSuggestions({lat, lng})
   const suggestions = mockRestaurants
-  // store suggestions to storage
 
   const roomId = (Math.random().toString(36).substr(2, 4).toUpperCase())
-  res.send({roomId})
+  
+  let newRoom = new Room(roomId)
+  newRoom.addSuggestions(suggestions)
+  store.push(newRoom)
+  res.send({ roomId })
 })
 
 app.get('/', (req, res) => {
-  res.send({text: 'Hello World'})
+  res.send({status: 'ok'})
 })
 
 io.on("connection", (socket) => {
   const { roomId } = socket.handshake.query;
   socket.join(roomId);
-
   io.in(roomId).emit(NEW_CONNECTION_EVENT, mockRestaurants)
 
   socket.on(NEW_LIKE_EVENT, (data: SocketEvent) => {
-    // Store what was liked
+    console.log("NEW LIKE: ", data)
+    
+    const restaurantId = data.body
+
+    store.forEach(room => {
+      if (room.id === roomId) {
+        room.addLike(restaurantId)
+        console.log("Liked restaurant: ", restaurantId)
+      }
+    })
     // If there is a match:
-    io.in(roomId).emit(NEW_MATCH_EVENT, data);
+    // io.in(roomId).emit(NEW_MATCH_EVENT, data);
   })
 
   socket.on("disconnect", () => {
