@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core/';
+import { createSession } from '../hooks/useCreateSession';
 
 // import './Home.css';
 
 const Home = () => {
-  const [roomName, setRoomName] = React.useState('');
+  // const [roomName, setRoomName] = useState('');
+  // var roomId;
+  const [position, setPosition] = useState({ lat: '', lng: '' });
   const history = useHistory();
 
-  const handleRoomNameChange = (event: any) => {
-    setRoomName(event.target.value);
+  const onCreateRoomClick = async () => {
+    const roomId = await createSession({
+      lat: '124',
+      lng: '1234',
+    });
+    // setRoomName(roomId);
+    // console.log('!!!!!!!', roomName);
+    console.log('???????', roomId);
+    history.push(`/${roomId}`);
   };
 
   const styles = {
@@ -41,7 +51,7 @@ const Home = () => {
           flexDirection: 'column',
         }}
       >
-        <div style={{ marginBottom: 20 }}>
+        {/* <div style={{ marginBottom: 20 }}>
           <input
             type="text"
             placeholder="Enter session id..."
@@ -50,14 +60,22 @@ const Home = () => {
             className="text-input-field"
             // style={{ width: 180, borderRadius: 8 }}
           />
-        </div>
-        <Button
+        </div> */}
+        {/* <Button
           style={{ borderRadius: 20 }}
           variant="contained"
           color="primary"
           onClick={() => history.push(`/${roomName}`)}
         >
-          Create/Join session
+          Join session
+        </Button> */}
+        <Button
+          style={{ borderRadius: 20 }}
+          variant="contained"
+          color="primary"
+          onClick={onCreateRoomClick}
+        >
+          Create session
         </Button>
       </div>
     </div>

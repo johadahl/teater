@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { mockRestaurants } from '../mockData';
 import SwipeDetail from '../components/SwipeDetail';
 import { useRestaurantsResult } from '../hooks/useResults';
 
 const Swipe = () => {
-  const [roomName, setRoomName] = React.useState('');
-  const [api, restaurantsResult, errorMessage] = useRestaurantsResult();
+  const params: any = useParams();
+  console.log('IN SWIPE', params.roomId);
+  const [restaurantsResult, errorMessage] = useRestaurantsResult({
+    roomName: params.roomId,
+  });
   console.log('restaurantsResult: ', restaurantsResult);
   const [restaurantCounter, setRestaurantCounter] = useState(0);
   // const [restaurantItem, setRestaurantItem] = useState(
   //   mockRestaurants[restaurantCounter]
   // );
   const [restaurantItem, setRestaurantItem] = useState(restaurantsResult);
+  console.log({ restaurantItem });
 
   const onClickYes = () => {
     setRestaurantCounter(restaurantCounter + 1);
@@ -22,27 +26,27 @@ const Swipe = () => {
   };
 
   useEffect(() => {
-    setRestaurantItem(mockRestaurants[restaurantCounter]);
+    setRestaurantItem(restaurantsResult[restaurantCounter]);
   }, [restaurantCounter]);
 
-  const handleRoomNameChange = (event: any) => {
-    setRoomName(event.target.value);
+  const renderSwipeDetail = () => {
+    if (restaurantsResult[restaurantCounter]) {
+      return (
+        <SwipeDetail
+          backgroundImage={restaurantsResult[restaurantCounter].backgroundImage}
+          id={restaurantsResult[restaurantCounter].id}
+          restaurantName={restaurantsResult[restaurantCounter].restaurantName}
+          description={restaurantsResult[restaurantCounter].description}
+          rating={restaurantsResult[restaurantCounter].rating}
+          price={restaurantsResult[restaurantCounter].price}
+          onClickYes={onClickYes}
+          onClickNo={onClickNo}
+        />
+      );
+    }
   };
 
-  return (
-    <div>
-      <SwipeDetail
-        backgroundImage={restaurantItem.backgroundImage}
-        id={restaurantItem.id}
-        restaurantName={restaurantItem.restaurantName}
-        description={restaurantItem.description}
-        rating={restaurantItem.rating}
-        price={restaurantItem.price}
-        onClickYes={onClickYes}
-        onClickNo={onClickNo}
-      />
-    </div>
-  );
+  return <div>{renderSwipeDetail()}</div>;
 };
 
 export default Swipe;
