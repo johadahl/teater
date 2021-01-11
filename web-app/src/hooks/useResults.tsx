@@ -3,6 +3,7 @@ import restaurants from '../api/restaurants';
 import socketIOClient from 'socket.io-client';
 
 const NEW_CONNECTION_EVENT = 'newConnection';
+const NEW_LIKED_EVENT = 'newLikedRestaurant';
 const SOCKET_SERVER_URL = 'https://teater-generator.herokuapp.com';
 
 export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
@@ -32,6 +33,10 @@ export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
       setRestaurantsResult(message);
     });
 
+    // socketRef.current.on(NEW_MATCH_EVENT, (message: any) => {
+    //   setRestaurantsResult(message);
+    // });
+
     // socket NEW_LIKE_EVENT
     // NEW_DISLIKE_EVENT
     // NEW_MATCH_EVENT
@@ -40,6 +45,12 @@ export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
       socketRef.current.disconnect();
     };
   }, [roomName]);
+  const sendNewLikeEvent = (likedRestaurantId: string) => {
+    socketRef.current.emit(NEW_LIKED_EVENT, {
+      body: likedRestaurantId,
+      senderId: socketRef.current.id,
+    });
+  };
 
-  return [restaurantsResult, errorMessage];
+  return { restaurantsResult, sendNewLikeEvent };
 };

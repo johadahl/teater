@@ -7,7 +7,7 @@ import { useRestaurantsResult } from '../hooks/useResults';
 const Swipe = () => {
   const params: any = useParams();
   console.log('IN SWIPE', params.roomId);
-  const [restaurantsResult, errorMessage] = useRestaurantsResult({
+  const { restaurantsResult, sendNewLikeEvent } = useRestaurantsResult({
     roomName: params.roomId,
   });
   console.log('restaurantsResult: ', restaurantsResult);
@@ -20,6 +20,7 @@ const Swipe = () => {
 
   const onClickYes = () => {
     setRestaurantCounter(restaurantCounter + 1);
+    sendNewLikeEvent(restaurantsResult[restaurantCounter].id);
   };
   const onClickNo = () => {
     setRestaurantCounter(restaurantCounter + 1);
