@@ -17,6 +17,10 @@ export class Room {
     this.liked = []
   }
 
+  addUser (user: string) {
+    this.users.push(user)
+  }
+
   addSuggestions (suggestions: Restaurant[]) {
     this.suggestions.concat(suggestions)
 
@@ -29,11 +33,13 @@ export class Room {
   }
 
   addLike (restaurantId: string) {
+    let isMatch = false
     this.liked.forEach(like => {
       if (like.restaurantId === restaurantId) {
         like.likes += 1
       }
     })
+    return isMatch
   }
 }
 

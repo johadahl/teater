@@ -9,27 +9,14 @@ export const createSession = async ({
   lat: string;
   lng: string;
 }) => {
-  //   const [roomId, setRoomId] = useState('');
-  //   const [errorMessage, setErrorMessage] = useState('');
-
-  //   const api = async () => {
   let roomId;
   try {
     const response = await restaurants.get(
       `get-suggestion?lat=${lat}&lng=${lng}`
     );
-    console.log('RESPONSE: ', response.data.roomId);
-    // setRoomId(response.data);
     roomId = response.data.roomId;
   } catch (error) {
     // setErrorMessage('Something went wrong');
   }
-  // };
-  // console.log('this is the roomId result: ', roomId);
-
-  // useEffect(() => {
-  //   api();
-  // }, [lat, lng]);
-
   return roomId;
 };

@@ -3,11 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from '@material-ui/core/';
 import { createSession } from '../hooks/useCreateSession';
 
-// import './Home.css';
-
 const Home = () => {
-  // const [roomName, setRoomName] = useState('');
-  // var roomId;
   const [position, setPosition] = useState({ lat: '', lng: '' });
   const history = useHistory();
 
@@ -16,9 +12,6 @@ const Home = () => {
       lat: '124',
       lng: '1234',
     });
-    // setRoomName(roomId);
-    // console.log('!!!!!!!', roomName);
-    console.log('???????', roomId);
     history.push(`/${roomId}`);
   };
 

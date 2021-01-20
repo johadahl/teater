@@ -42,20 +42,25 @@ io.on("connection", (socket) => {
   const { roomId } = socket.handshake.query;
   socket.join(roomId);
   io.in(roomId).emit(NEW_CONNECTION_EVENT, mockRestaurants)
+  
+  store.forEach(room => {
+    if (room.id === roomId) room.addUser(socket.id)
+  })
 
   socket.on(NEW_LIKE_EVENT, (data: SocketEvent) => {
-    console.log("NEW LIKE: ", data)
-    
     const restaurantId = data.body
 
     store.forEach(room => {
       if (room.id === roomId) {
         room.addLike(restaurantId)
-        console.log("Liked restaurant: ", restaurantId)
+        room.liked.forEach(like => {
+          if (like.likes === room.users.length && like.likes > 1) {
+            console.log("MATCH: ", restaurantId)
+            io.in(roomId).emit(NEW_MATCH_EVENT, restaurantId)
+          }
+        })
       }
     })
-    // If there is a match:
-    // io.in(roomId).emit(NEW_MATCH_EVENT, data);
   })
 
   socket.on("disconnect", () => {

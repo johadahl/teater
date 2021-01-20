@@ -6,17 +6,14 @@ import { useRestaurantsResult } from '../hooks/useResults';
 
 const Swipe = () => {
   const params: any = useParams();
-  console.log('IN SWIPE', params.roomId);
   const { restaurantsResult, sendNewLikeEvent } = useRestaurantsResult({
-    roomName: params.roomId,
+    roomId: params.roomId,
   });
-  console.log('restaurantsResult: ', restaurantsResult);
   const [restaurantCounter, setRestaurantCounter] = useState(0);
   // const [restaurantItem, setRestaurantItem] = useState(
   //   mockRestaurants[restaurantCounter]
   // );
   const [restaurantItem, setRestaurantItem] = useState(restaurantsResult);
-  console.log({ restaurantItem });
 
   const onClickYes = () => {
     setRestaurantCounter(restaurantCounter + 1);

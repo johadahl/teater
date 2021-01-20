@@ -11,7 +11,6 @@ const SwipeDetail = ({
   onClickYes,
   onClickNo,
 }: any) => {
-  console.log(backgroundImage);
   const styles = {
     buttonContainer: {
       display: 'flex',
@@ -27,7 +26,6 @@ const SwipeDetail = ({
       fontWeight: 'bold',
     },
   };
-  console.log(restaurantName);
   return (
     <div
       style={{
