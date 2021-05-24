@@ -14,9 +14,18 @@ export const createSession = async ({
     const response = await restaurants.get(
       `get-suggestion?lat=${lat}&lng=${lng}`
     );
+    // setRoomId(response.data);
+
     roomId = response.data.roomId;
   } catch (error) {
     // setErrorMessage('Something went wrong');
   }
+  // };
+
+  // useEffect(() => {
+  //   api();
+  // }, [lat, lng]);
+
+
   return roomId;
 };

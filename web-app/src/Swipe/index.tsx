@@ -10,9 +10,7 @@ const Swipe = () => {
     roomId: params.roomId,
   });
   const [restaurantCounter, setRestaurantCounter] = useState(0);
-  // const [restaurantItem, setRestaurantItem] = useState(
-  //   mockRestaurants[restaurantCounter]
-  // );
+
   const [restaurantItem, setRestaurantItem] = useState(restaurantsResult);
 
   const onClickYes = () => {

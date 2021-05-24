@@ -4,7 +4,9 @@ import { Button } from '@material-ui/core/';
 import { createSession } from '../hooks/useCreateSession';
 
 const Home = () => {
-  const [position, setPosition] = useState({ lat: '', lng: '' });
+  // const [roomName, setRoomName] = useState('');
+  // var roomId;
+  // const [position, setPosition] = useState({ lat: '', lng: '' });
   const history = useHistory();
 
   const onCreateRoomClick = async () => {
@@ -12,11 +14,8 @@ const Home = () => {
       lat: '124',
       lng: '1234',
     });
-    history.push(`/${roomId}`);
-  };
 
-  const styles = {
-    container: {},
+    history.push(`/${roomId}`);
   };
 
   return (
