@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://teater-generator.herokuapp.com',
+  baseURL: 'http://localhost:4000' // 'https://teater-generator.herokuapp.com',
 });

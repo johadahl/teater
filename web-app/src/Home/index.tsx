@@ -14,7 +14,7 @@ const Home = () => {
       lat: '124',
       lng: '1234',
     });
-    // setRoomName(roomId);
+
     history.push(`/${roomId}`);
   };
 

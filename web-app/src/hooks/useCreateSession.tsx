@@ -9,16 +9,13 @@ export const createSession = async ({
   lat: string;
   lng: string;
 }) => {
-  //   const [roomId, setRoomId] = useState('');
-  //   const [errorMessage, setErrorMessage] = useState('');
-
-  //   const api = async () => {
   let roomId;
   try {
     const response = await restaurants.get(
       `get-suggestion?lat=${lat}&lng=${lng}`
     );
     // setRoomId(response.data);
+
     roomId = response.data.roomId;
   } catch (error) {
     // setErrorMessage('Something went wrong');
@@ -28,6 +25,7 @@ export const createSession = async ({
   // useEffect(() => {
   //   api();
   // }, [lat, lng]);
+
 
   return roomId;
 };

@@ -41,26 +41,28 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   const { roomId } = socket.handshake.query;
   socket.join(roomId);
-  io.in(roomId).emit(NEW_CONNECTION_EVENT, mockRestaurants);
 
-  store.forEach((room) => {
-    if (room.id === roomId) room.addUser(socket.id);
-  });
+  io.in(roomId).emit(NEW_CONNECTION_EVENT, mockRestaurants)
+  
+  store.forEach(room => {
+    if (room.id === roomId) room.addUser(socket.id)
+  })
 
   socket.on(NEW_LIKE_EVENT, (data: SocketEvent) => {
-    const restaurantId = data.body;
+    const restaurantId = data.body
 
     store.forEach((room) => {
       if (room.id === roomId) {
-        room.addLike(restaurantId);
-        room.liked.forEach((like) => {
+        room.addLike(restaurantId)
+        room.liked.forEach(like => {
           if (like.likes === room.users.length && like.likes > 1) {
-            io.in(roomId).emit(NEW_MATCH_EVENT, restaurantId);
+            console.log("MATCH: ", restaurantId)
+            io.in(roomId).emit(NEW_MATCH_EVENT, restaurantId)
           }
-        });
+        })
       }
-    });
-  });
+    })
+  })
 
   socket.on('disconnect', () => {
     socket.leave(roomId);

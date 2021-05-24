@@ -7,7 +7,7 @@ import { useRestaurantsResult } from '../hooks/useResults';
 const Swipe = () => {
   const params: any = useParams();
   const { restaurantsResult, sendNewLikeEvent } = useRestaurantsResult({
-    roomName: params.roomId,
+    roomId: params.roomId,
   });
   const [restaurantCounter, setRestaurantCounter] = useState(0);
 

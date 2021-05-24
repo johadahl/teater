@@ -3,11 +3,12 @@ import restaurants from '../api/restaurants';
 import socketIOClient from 'socket.io-client';
 
 const NEW_CONNECTION_EVENT = 'newConnection';
-const NEW_LIKED_EVENT = 'newLikedRestaurant';
-const NEW_MATCH_EVENT = 'newLikedRestaurant';
-const SOCKET_SERVER_URL = 'https://teater-generator.herokuapp.com';
 
-export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
+const NEW_LIKED_EVENT = 'newLike';
+const NEW_MATCH_EVENT = 'newMatch';
+const SOCKET_SERVER_URL = 'http://localhost:4000' // 'https://teater-generator.herokuapp.com';
+
+export const useRestaurantsResult = ({ roomId }: { roomId: string }) => {
   const [restaurantsResult, setRestaurantsResult] = useState<any>([]);
   const [matchResult, setMatchResult] = useState<any>([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +16,7 @@ export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
 
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { roomName },
+      query: { roomId },
     });
 
     socketRef.current.on(NEW_CONNECTION_EVENT, (message: any) => {
@@ -29,7 +30,7 @@ export const useRestaurantsResult = ({ roomName }: { roomName: string }) => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, [roomName]);
+  }, [roomId]);
   const sendNewLikeEvent = (likedRestaurantId: string) => {
     socketRef.current.emit(NEW_LIKED_EVENT, {
       body: likedRestaurantId,
